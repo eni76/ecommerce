@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav {
+  @apply text-gray-500 text-lg font-semibold hover:text-black transition ease-in-out duration-500;
+}
+
+.flexCol {
+  @apply flex flex-col justify-center items-center;
+}
+.flexRow {
+  @apply flex justify-center items-center;
+}
+
+.cart:hover {
+  .count {
+    @apply z-20 text-white bg-primary shadow-2xl  border-white transition ease-in-out duration-500;
+  }
+}
+
+/* .tr {
+  padding: 1rem;
+} */
+
+td {
+  padding: 2rem;
+}
+th{
+    padding:0 2rem;
+}

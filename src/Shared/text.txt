@@ -1,0 +1,89 @@
+  // useEffect(() => {
+  //   // Only fetch if we don’t already have data in context
+  //   if (!productData || productData.length === 0) {
+  //     HandleGetProducts();
+  //   }
+  // }, [productData, HandleGetProducts]);
+
+  // useEffect(() => {
+  //   if (productData && productData.length > 0) {
+  //     const found = productData.find((prod) => parseInt(prod.id) === parseInt(id));
+  //     if (found) {
+  //       console.log("found:", found);
+  //       setProduct(found);
+  //     } else {
+  //       console.warn(`No product found for id ${id}`);
+  //     }
+  //   }
+  // }, [productData, id]);
+
+
+   const HandleDeleteCart = async (prod) => {
+    try {
+      if (!isAuthentified) {
+        const storedCartItems =
+          JSON.parse(localStorage.getItem("cartItems")) || [];
+
+        const existingItem = storedCartItems.find(
+          (item) => parseInt(item?.id) === parseInt(prod?.id)
+        );
+
+        if (!existingItem) {
+          console.warn("Item not found in cart, cannot delete.");
+          return;
+        }
+
+        // ✅ Remove the item
+        const updatedCartItems = storedCartItems.filter(
+          (item) => parseInt(item?.id) !== parseInt(prod?.id)
+        );
+
+       
+        setCartItems(updatedCartItems);
+        localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+
+        console.log(`Deleted item with id ${prod.id} from cart.`);
+      } else {
+       
+       
+        console.log("AuthMod");
+      }
+    } catch (error) {
+      console.error("Error deleting cart item:", error.message);
+    }
+  };
+
+  const HandleUpdateCart = async (prod) => {
+    try {
+      if (!isAuthentified) {
+        const storedCartItems =
+          JSON.parse(localStorage.getItem("cartItems")) || [];
+
+        const existingItem = storedCartItems.find(
+          (item) => parseInt(item?.id) === parseInt(prod?.id)
+        );
+
+        if (!existingItem) {
+          console.warn("Item not found in cart, cannot update at checkout.");
+          return;
+        }
+
+        // ✅ Update only the existing product
+        const updatedCartItems = storedCartItems.map((item) =>
+          parseInt(item?.id) === parseInt(prod?.id)
+            ? { ...item, ...prod } // merge changes (e.g., new quantity, color, etc.)
+            : item
+        );
+
+        // ✅ Save to state and localStorage
+        setCartItems(updatedCartItems);
+        localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      } else {
+        // ✅ Authenticated user: update on server
+
+        console.log("Auth");
+      }
+    } catch (error) {
+      console.error("Error updating cart:", error.message);
+    }
+  };
