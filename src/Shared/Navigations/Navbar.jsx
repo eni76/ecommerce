@@ -1,13 +1,17 @@
 // import { useRef, useState } from "react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
-import { FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaHeart, FaShoppingCart, FaUser } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
 import { ProductContext } from "../../Context/ProductContext";
 
 const Navbar = () => {
-  const { cartCout } = useContext(ProductContext);
+  const { cartCout, favouriteCout} = useContext(ProductContext);
+
+    useEffect(() => {
+      console.log("favcountt:", favouriteCout);
+    }, [favouriteCout]);
   const navlinks = [
     {
       id: 1,
@@ -82,10 +86,26 @@ const Navbar = () => {
           </div>
 
           <div className="hidden lg:block">
-            <div className="cartSearch flex justify-center items-center gap-2 text-sm">
+            <div className="cartSearch flex justify-center items-center gap-4 text-sm">
               <span className="border-[1px] border-white bg-black  p-[7px] text-sm  hover:bg-white hover:text-black transition ease-in-out duration-300 rounded-3xl cursor-pointer">
                 <FiSearch />
               </span>
+
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "border-[1px] bg-white  text-black rounded-3xl p-[10px]  cart  text-sm relative"
+                    : "border-[1px]  z-10 border-white bg-black  p-[7px] text-sm  hover:bg-white cart  hover:text-black transition ease-in-out duration-300 rounded-3xl relative"
+                }
+                to={"/favouritecart"}
+              >
+                <FaHeart />
+
+                <span className="absolute border-[1px] border-white  count -top-2 -right-3 h-5 w-5 p-2 rounded-full bg-white text-primary flex justify-center items-center font-bold">
+                
+                   {(favouriteCout && favouriteCout) || 0}
+                </span>
+              </NavLink>
               <NavLink
                 className={({ isActive }) =>
                   isActive
@@ -97,7 +117,7 @@ const Navbar = () => {
                 <FaShoppingCart />
 
                 <span className="absolute border-[1px] border-white  count -top-2 -right-3 h-5 w-5 p-2 rounded-full bg-white text-primary flex justify-center items-center font-bold">
-                  {(cartCout && cartCout) || 0}
+                   {(cartCout && cartCout) || 0}
                 </span>
               </NavLink>
             </div>
@@ -166,7 +186,7 @@ const Navbar = () => {
           </Link>
 
           {/* Menu */}
-         <div className="flex  justify-center items-center gap-4">
+          <div className="flex  justify-center items-center gap-4">
             <Link
               to={"/login"}
               className=" flex  justify-center items-center p-4 lg:hidden  h-16 w-16 rounded-md text-white text-3xl font-bold"

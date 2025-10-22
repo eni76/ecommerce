@@ -28,6 +28,12 @@
 td {
   padding: 2rem;
 }
-th{
-    padding:0 2rem;
+th {
+  padding: 0 2rem;
+}
+
+.loveParent:hover {
+  .love {
+    @apply text-white transition ease-in-out duration-500;
+  }
 }

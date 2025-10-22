@@ -6,12 +6,13 @@ const ProductProvide = ({ children }) => {
   const [productData, setProductData] = useState(null);
   const [isAuthentified, setIsAuthentified] = useState(false);
   const [cartCout, setCartCount] = useState(0);
+  const [favouriteCout, setfavouriteCout] = useState(0);
 
   const [cartItems, setCartItems] = useState(
     JSON.parse(localStorage.getItem("cartItems")) || []
   );
   const [favoriteItem, setfavoriteItem] = useState(
-    JSON.parse(localStorage.getItem("favoriteItems")) || []
+    JSON.parse(localStorage.getItem("favourieCart")) || []
   );
 
   useEffect(() => {
@@ -22,13 +23,12 @@ const ProductProvide = ({ children }) => {
       setCartCount(count);
     }
   }, [cartItems]);
-
   useEffect(() => {
-    console.log("favcart:", favoriteItem);
+    console.log("favv:", favoriteItem);
     if (favoriteItem) {
       const count = favoriteItem.reduce((acc, curr) => acc + curr?.quantity, 0);
 
-      setCartCount(count);
+      setfavouriteCout(count);
     }
   }, [favoriteItem]);
 
@@ -143,68 +143,45 @@ const ProductProvide = ({ children }) => {
     setCartItems(updatedCartItems);
   };
 
-
-  //  const HandleAddFavourite = async (prod) => {
-
-  //   try {
-  //     if (!isAuthentified) {
-  //       const storedfavItems = JSON.parse(
-  //         localStorage.getItem("favoriteItems")
-  //       );
-  //       const existingfavItems = storedfavItems?.find(
-  //         (item) => parseInt(item?.id) === parseInt(prod?.id)
-  //       );
-  //       if (!existingfavItems) {
-  //         const updatedfavItems = [...storedfavItems, { ...prod }];
-  //         localStorage.setItem(
-  //           "favoriteItems",
-  //           JSON.stringify(updatedfavItems)
-  //         );
-  //         setfavoriteItem(updatedfavItems);
-  //       } else {
-  //         console.log("Product Alraedy existing in favouruite");
-  //       }
-  //     } else {
-  //       console.log("Authentified!");
-  //     }
-  //   } catch (error) {
-  //     console.log(error?.message);
-  //   }
-  // };
-
-
-  const HandleAddFavourite = async (prod) => {
-  try {
-    if (!prod || !prod.id) {
-      console.log("Invalid product");
-      return;
-    }
+  const HandleAddFavouritrCart = (prod) => {
+    console.log("prod", prod);
 
     if (!isAuthentified) {
-      const storedfavItems = JSON.parse(localStorage.getItem("favoriteItems")) || [];
-      const existingfavItems = storedfavItems.find(
-        (item) => parseInt(item.id) === parseInt(prod.id)
+      // Get existing cart or initialize
+      let storedFavouriteCart =
+        JSON.parse(localStorage.getItem("favourieCart")) || [];
+
+      // Find if product already exists in the cart
+      const existingItem = storedFavouriteCart?.find(
+        (item) => parseInt(item?.id) === parseInt(prod?.id)
       );
 
-      if (!existingfavItems) {
-        const updatedfavItems = [...storedfavItems, { ...prod }];
-        localStorage.setItem("favoriteItems", JSON.stringify(updatedfavItems));
-        setfavoriteItem(updatedfavItems);
-        
-          toast.success("FavItem Updated Successfully!");
-        console.log("favoriteItems:", updatedfavItems);
-
+      let updatedFavouriteCart;
+      if (existingItem) {
+        toast.info("Item already in FavouriteCart");
+        updatedFavouriteCart = storedFavouriteCart; // no change
       } else {
-        console.log("Product already exists in favourites");
+        console.log("exist", existingItem);
+
+        // Create a new array with updated quantity for the existing item
+        updatedFavouriteCart = [
+          ...storedFavouriteCart,
+          { ...prod, quantity: 1 },
+        ];
+        toast.success("Item Added to FavouriteCart Succesfully!");
       }
+
+      // Save updated cart in localStorage
+      localStorage.setItem(
+        "favourieCart",
+        JSON.stringify(updatedFavouriteCart)
+      );
+      setfavoriteItem(updatedFavouriteCart);
+      console.log("Updated favCart:", updatedFavouriteCart);
     } else {
-      console.log("Authentified!");
-      // You could add logic here to handle authenticated users (e.g., API call)
+      console.log("User is authenticated — handle API cart instead");
     }
-  } catch (error) {
-    console.log("Error adding to favourites:", error?.message);
-  }
-};
+  };
 
   return (
     <ProductContext.Provider
@@ -215,10 +192,11 @@ const ProductProvide = ({ children }) => {
         cartItems,
         cartCout,
         favoriteItem,
+        favouriteCout,
         setIsAuthentified,
         HandleUpdateCart,
         HandleDeleteCart,
-        HandleAddFavourite,
+        HandleAddFavouritrCart,
       }}
     >
       {children}
