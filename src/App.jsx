@@ -6,7 +6,7 @@ import { DotLoader } from "react-spinners";
 
 // import { ProductProvider } from "./Context/ProductContext";
 
-export const baseUrl = "https://ecombackend-vdz1.onrender.com/";
+export const baseUrl = "https://ecombackend-ihay.onrender.com/";
 
 function App() {
   const { loading, setLoading } = useContext(ProductContext);
@@ -20,9 +20,9 @@ function App() {
   return (
     <>
       {loading ? (
-        <div className="loading-spinner min-h-screen flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center min-h-screen loading-spinner">
           <DotLoader />
-          <p className="logo font-bold font-serif italic text-2xl"> Granduer</p>
+          <p className="font-serif text-2xl italic font-bold logo"> Granduer</p>
         </div>
       ) : (
         <>
