@@ -1,0 +1,8 @@
+    1**//make the log request
+    2**//get the responseData
+    3**//get the token passed to header or body
+    4**// remove "Bearer  and keep only the JWT
+    5**//decode the token to get userId
+    6**//Get userId from decoded token
+    7**//Add to cart and pass token to addToCart
+

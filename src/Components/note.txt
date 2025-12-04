@@ -1,0 +1,1 @@
+Eche component_folder e.g HomeComponent holds components that are rendered in its respective pageComonent e.g Home.jsx
