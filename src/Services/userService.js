@@ -24,7 +24,7 @@ export const loginUser = async (logData, userCart) => {
 
   try {
     //make req
-    const res = await fetch(`${baseUrl}loginUser`, {
+    const res = await fetch("http://localhost:5000/verifyEmail", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

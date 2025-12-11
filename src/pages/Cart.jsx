@@ -72,14 +72,14 @@ const Cart = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-white py-10 px-4 md:px-10 relative  flexCol">
+      <div className="relative min-h-screen px-4 py-10 bg-white md:px-10 flexCol">
         {isLoading && (
-          <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center z-20 bg-transWhite text-black gap-2">
+          <div className="absolute top-0 left-0 z-20 flex items-center justify-center w-full h-full gap-2 text-black bg-transWhite">
             <p className="text-2xl font-semibold">Loading</p>
             <PulseLoader />
           </div>
         )}
-        <h1 className="text-3xl font-bold text-center mb-8">Your Cart</h1>
+        <h1 className="mb-8 text-3xl font-bold text-center">Your Cart</h1>
 
         <div
           className={` ${
@@ -90,7 +90,7 @@ const Cart = () => {
             onClick={() => setIsModalOpen(false)}
             className="absolute top-12 right-10 z-20 flexRow  rounded-full  bg-white text-primary border-[1px] border-primary hover:border-primary hover:bg-primary text-lg font-semibold hover:text-white transition ease-in-out duration-500 cursor-pointer"
           >
-            <ImCancelCircle className="h-8 w-8" />
+            <ImCancelCircle className="w-8 h-8" />
           </span>
 
           <Edit
@@ -105,40 +105,40 @@ const Cart = () => {
         {cartItems && cartItems.length > 0 ? (
           <div className="overflow-x-auto">
             {/* Table wrapper for desktop */}
-            <table className="hidden md:table min-w-full border border-gray-200 rounded-xl shadow-sm">
+            <table className="hidden min-w-full border border-gray-200 shadow-sm md:table rounded-xl">
               <thead className="bg-gray-100">
                 <tr className="text-left text-gray-700">
-                  <th className="py-3 px-4">Product</th>
-                  <th className="py-3 px-4">Price</th>
-                  <th className="py-3 px-4">Quantity</th>
-                  <th className="py-3 px-4">Total</th>
-                  <th className="py-3 px-4 text-center">Action</th>
+                  <th className="px-4 py-3">Product</th>
+                  <th className="px-4 py-3">Price</th>
+                  <th className="px-4 py-3">Quantity</th>
+                  <th className="px-4 py-3">Total</th>
+                  <th className="px-4 py-3 text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {cartItems.map((item, index) => (
                   <tr
                     key={index}
-                    className="border-t hover:bg-gray-50 transition"
+                    className="transition border-t hover:bg-gray-50"
                   >
-                    <td className="py-3 px-4 flex items-center gap-3">
+                    <td className="flex items-center gap-3 px-4 py-3">
                       <img
                         src={item?.image || item?.product?.image}
                         alt={item?.name || item?.product?.name}
-                        className="w-12 h-12 object-cover rounded-md"
+                        className="object-cover w-12 h-12 rounded-md"
                       />
                       <span className="font-medium">
                         {item?.name || item?.product?.name}
                       </span>
                     </td>
-                    <td className="py-3 px-4">
+                    <td className="px-4 py-3">
                       ${item?.price || item?.product?.price}
                     </td>
-                    <td className="py-3 px-4">{item?.quantity}</td>
-                    <td className="py-3 px-4 font-semibold">
+                    <td className="px-4 py-3">{item?.quantity}</td>
+                    <td className="px-4 py-3 font-semibold">
                       ${(item?.price || item?.product?.price) * item?.quantity}
                     </td>
-                    <td className="text-center flex justify-between gap-2">
+                    <td className="flex justify-between gap-2 text-center">
                       <span
                         onClick={() => {
                           console.log("item:", item);
@@ -147,7 +147,7 @@ const Cart = () => {
                           setProd(item);
                         }}
                         title="Edit"
-                        className="bg-black text-white px-2 py-1 rounded-md hover:bg-gray-800 cursor-pointer"
+                        className="px-2 py-1 text-white bg-black rounded-md cursor-pointer hover:bg-gray-800"
                       >
                         <RiEditCircleFill />
                       </span>
@@ -157,7 +157,7 @@ const Cart = () => {
                           HandleDeleteCart(item?.id || item?.productid);
                         }}
                         title="Delete"
-                        className="bg-black text-white px-2 py-1 rounded-md hover:bg-gray-800 cursor-pointer"
+                        className="px-2 py-1 text-white bg-black rounded-md cursor-pointer hover:bg-gray-800"
                       >
                         <RiDeleteBin3Fill />
                       </span>
@@ -172,16 +172,16 @@ const Cart = () => {
               {cartItems.map((item, index) => (
                 <div
                   key={index}
-                  className="border border-gray-200 rounded-lg p-4 shadow-sm flex flex-col gap-3"
+                  className="flex flex-col gap-3 p-4 border border-gray-200 rounded-lg shadow-sm"
                 >
                   <div className="flex items-center gap-3">
                     <img
                       src={item.image || item?.product?.image}
                       alt={item.name || item?.product?.name}
-                      className="w-16 h-16 object-cover rounded-md"
+                      className="object-cover w-16 h-16 rounded-md"
                     />
                     <div>
-                      <h3 className="font-semibold text-lg">
+                      <h3 className="text-lg font-semibold">
                         {item.name || item?.product?.name}
                       </h3>
                       <p className="text-gray-600">
@@ -190,7 +190,7 @@ const Cart = () => {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center mt-2 text-sm">
+                  <div className="flex items-center justify-between mt-2 text-sm">
                     <span>Quantity: {item.quantity}</span>
                     <span className="font-semibold">
                       Total:
@@ -206,7 +206,7 @@ const Cart = () => {
                       );
                       console.log("prodd:", prod);
                     }}
-                    className="mt-2 w-full bg-black text-white py-2 rounded-md hover:bg-gray-800"
+                    className="w-full py-2 mt-2 text-white bg-black rounded-md hover:bg-gray-800"
                   >
                     Remove
                   </button>
@@ -216,7 +216,7 @@ const Cart = () => {
 
             {/* Summary */}
             <div className="flex justify-end mt-6">
-              <div className="bg-gray-100 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 shadow-sm">
+              <div className="w-full p-5 bg-gray-100 rounded-lg shadow-sm sm:w-1/2 md:w-1/3">
                 <div className="flex justify-between mb-2 text-gray-700">
                   <span>Items in Cart:</span>
                   <span>{cartcout}</span>
@@ -237,7 +237,7 @@ const Cart = () => {
                 </div>
                 <button
                   onClick={(e) => HandleInitializePayent(e)}
-                  className="mt-5 w-full bg-black text-white py-3 rounded-md font-semibold hover:bg-gray-800 transition"
+                  className="w-full py-3 mt-5 font-semibold text-white transition bg-black rounded-md hover:bg-gray-800"
                 >
                   Checkout
                 </button>
@@ -246,10 +246,10 @@ const Cart = () => {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center mt-20 text-gray-600">
-            <p className="text-xl mb-4">Your cart is currently empty 🛒</p>
+            <p className="mb-4 text-xl">Your cart is currently empty 🛒</p>
             <a
               href="/"
-              className="bg-black text-white px-5 py-2 rounded-md hover:bg-gray-800 transition"
+              className="px-5 py-2 text-white transition bg-black rounded-md hover:bg-gray-800"
             >
               Continue Shopping
             </a>

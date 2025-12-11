@@ -16,6 +16,7 @@ import SingleProduct from "./pages/SingleProdoct.jsx";
 import Login from "./pages/Login.jsx";
 import FavCart from "./pages/FavCart.jsx";
 import VerifyPayment from "./pages/VerifyPayment.jsx";
+import VerifyEmail from "./pages/VerifyEmail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         element: <VerifyPayment />,
         path: "/verifypayment",
+      },
+{
+        element: <VerifyEmail />,
+        path: "/verifyemail/:token",
       },
     ],
   },
